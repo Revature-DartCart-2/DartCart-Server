@@ -17,6 +17,19 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    #<login user to smtp server>
+    username: noreplydartcart@gmail.com
+    #<login password to smtp server>
+    password: RevatureP3pass45
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 management:
   endpoints:
@@ -28,4 +41,4 @@ management:
           - "info"
 
 com.revature.jwtissuer : localhost
-com.revature.secret : aa2228b097e40541dfb229bacf40f00a81eac92a1b11412c4d678cb99feba0e96187db65b4b28eefd90097aa3b668790189dc1635823b7bb44cc5b4abdc61c37 
+com.revature.secret : aa2228b097e40541dfb229bacf40f00a81eac92a1b11412c4d678cb99feba0e96187db65b4b28eefd90097aa3b668790189dc1635823b7bb44cc5b4abdc61c37

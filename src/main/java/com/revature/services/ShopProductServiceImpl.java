@@ -106,4 +106,7 @@ public class ShopProductServiceImpl implements ShopProductService {
     }
     return shopProducts;
   }
+  public List<ShopProduct> getShopProductsByProduct(Product p) {
+	  return shopProductRepo.findByProduct(p);
+  }
 }

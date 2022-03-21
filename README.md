@@ -28,19 +28,17 @@ DartCart is an e-commerce web application designed to buy and sell products deve
 * View previous order and transaction details.
 
 ## Getting Started
-
-(include git clone command)
-(include all environment setup steps)
-
-> Be sure to include BOTH Windows and Unix command  
-> Be sure to mention if the commands only work on a specific platform (eg. AWS, GCP)
-- All the `code` required to get started
-- Images of what it should look like
+1) in a new folder where you want your project to be saved, right click and select git bash here. In your git bash command terminal, enter: git clone https://github.com/Revature-DartCart-2/DartCart-Server.git
+2)create a new, seperate folder for where you would like your SpringToolSuites workspace to be. 
+3) open SpringToolSuite, select add a local project, using the drop down choose the folder where you cloned the project for the project path and the newly created workspace folder for the workspace path
+![Register](https://github.com/Revature-DartCart-2/DartCart-Server/blob/AndrewS/gendoc/image/readme/stslaunch.png?raw=true)
+4) Run As Spring Boot Application
+![Register](https://github.com/Revature-DartCart-2/DartCart-Server/blob/AndrewS/gendoc/image/readme/runAs.png?raw=true)
 
 ## Usage
 
 > Here, you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
-## Contributors
+## Contributors of first iteration (DartCart 1)
 
 * Abdul Samad Sadat
 * Alejandro Gomez
@@ -65,4 +63,26 @@ DartCart is an e-commerce web application designed to buy and sell products deve
 * Thanh Nguyen
 * Tomas Abebaw Anbessaw
 
-This project was made for the Revature Winter Batch 2022
+## Contributers of second iteration (DartCart 2)
+
+* Andy Escobar
+* Andrew Snyder
+* Austin Ristau
+* Hannah Hospital
+* Austin McGehee
+* Austin Blandford
+* Awaab Elamin
+* Brandon Clark
+* Michael Bronzo
+* Christian Mains
+* Philip Wentworth
+* Gurman Singh
+* Jacob Sotto
+* Paul Agilpay
+* Mike Campbell
+* Lamar Lewis
+* Robert Lavoie
+* Scott Damon
+* Tracy Bodine
+* Joshua Robles
+Dart Cart 2 was made for the Revature Java/React 1/24 batch
