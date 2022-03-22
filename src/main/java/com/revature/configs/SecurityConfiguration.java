@@ -69,10 +69,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .antMatchers(
         "/h2/**",
         "/login",
+        "/resetpass/*",
+        "/resetpassword",
         "/register",
         "/signup",
         "/signup/shop",
         "/shop_products",
+        "/featured_products",
         "/shop_products/search/**"
       )
       .permitAll()

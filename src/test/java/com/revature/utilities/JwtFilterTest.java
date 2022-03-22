@@ -144,7 +144,8 @@ public class JwtFilterTest {
           "555 555 5555",
           "Address",
           0L,
-          new ArrayList<>()
+          null,null
+         // new ArrayList<>()
         )
       );
 
