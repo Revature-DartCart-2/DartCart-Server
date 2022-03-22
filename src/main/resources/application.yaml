@@ -5,13 +5,13 @@ server:
 
 spring:
   application: 
-    name: dartcart
+    name: dart-cart
 
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:sqlserver://project3server.database.windows.net:1433;databaseName=Project3
+    username: p3admin
+    password: Project3!
   jpa:
     database-platform: org.hibernate.dialect.SQLServerDialect
     show-sql: true
@@ -27,5 +27,5 @@ management:
           - "health"
           - "info"
 
-com.revature.jwtissuer : ${HOSTNAME}
-com.revature.secret : ${secret}
+com.revature.jwtissuer : localhost
+com.revature.secret : aa2228b097e40541dfb229bacf40f00a81eac92a1b11412c4d678cb99feba0e96187db65b4b28eefd90097aa3b668790189dc1635823b7bb44cc5b4abdc61c37 
