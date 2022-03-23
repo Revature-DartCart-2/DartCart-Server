@@ -112,4 +112,8 @@ public class ShopProductServiceImpl implements ShopProductService {
   public List<ShopProduct> getShopProductsByProduct(Product p) {
 	  return shopProductRepo.findByProduct(p);
   }
+  
+  public ShopProduct addShopProduct(ShopProduct shopProduct) {
+	  return shopProductRepo.save(shopProduct);
+  }
 }

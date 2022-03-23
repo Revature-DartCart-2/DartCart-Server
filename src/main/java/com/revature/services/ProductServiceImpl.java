@@ -15,4 +15,8 @@ public class ProductServiceImpl implements ProductService {
   public Optional<Product> getProductById(int productId) {
     return productRepo.findById(productId);
   }
+  
+  public Product addProduct(Product product) {
+	  return productRepo.save(product);
+  }
 }

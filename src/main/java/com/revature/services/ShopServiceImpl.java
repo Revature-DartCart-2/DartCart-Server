@@ -43,4 +43,8 @@ public class ShopServiceImpl implements ShopService {
       return false;
     }
   }
+  
+  public List<Shop> getShopsByUserId(int id) {
+	  return shopRepo.getByUserId(id);
+  }
 }

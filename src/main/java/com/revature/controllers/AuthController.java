@@ -1,12 +1,19 @@
 package com.revature.controllers;
 
+import com.revature.models.ResetPassword;
 import com.revature.models.UserLogin;
 import com.revature.services.AuthService;
+import com.revature.services.ResetPasswordService;
 import com.revature.services.UserService;
 import com.revature.utilities.JwtTokenUtil;
 import com.revature.utilities.EmailServiceImpl;
 
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -33,13 +40,16 @@ public class AuthController {
 	private final JwtTokenUtil jwtTokenUtil;
 	private final UserService userService;
 	private final AuthService authService;
+	private final ResetPasswordService resetPasswordService;
 	private final EmailServiceImpl emailServiceImp;
 	private final BCryptPasswordEncoder bCryptEncoder;
 
+	private static final int minutesUntilResetPasswordEmailExpires = 15;
 	
 	@Autowired
 	public AuthController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil,
-			UserService userService, AuthService authService, EmailServiceImpl emailServiceImp, BCryptPasswordEncoder bCryptEncoder) {
+						  UserService userService, AuthService authService, EmailServiceImpl emailServiceImp,
+						  BCryptPasswordEncoder bCryptEncoder, ResetPasswordService resetPasswordService) {
 		super();
 		this.authenticationManager = authenticationManager;
 		this.jwtTokenUtil = jwtTokenUtil;
@@ -47,6 +57,7 @@ public class AuthController {
 		this.authService = authService;
 		this.emailServiceImp = emailServiceImp;
 		this.bCryptEncoder = bCryptEncoder;
+		this.resetPasswordService = resetPasswordService;
 	}
 
 	@PostMapping("/login")
@@ -70,9 +81,17 @@ public class AuthController {
 	@GetMapping("/resetpass/{username}")
 	public ResponseEntity<?> resetPassword(@PathVariable("username") String username) {
 		com.revature.models.User user = userService.getUserByUsername(username);
-		
 		if(user == null) {
 			return ResponseEntity.notFound().build();
+		}
+		
+		Iterable<ResetPassword> userResetPassword = resetPasswordService.findAllByUserId(user.getId());
+		
+		if(userResetPassword != null) { // reset email(s) already in database, delete all found for user
+			Iterator<ResetPassword> userRpIterator = userResetPassword.iterator();
+			while( userRpIterator.hasNext() ) {
+				resetPasswordService.deleteByID( userRpIterator.next().getEmailId() );
+			}
 		}
 		
 		// Caesar Cipher to obscure username in link
@@ -92,32 +111,75 @@ public class AuthController {
             cipheredUsername.append( (char) shiftedLetter );            
         }
 		
-		emailServiceImp.sendSimpleMessage(user.getEmail(), "password reset email test", "http://localhost:3000/resetpassword?data=" + cipheredUsername.toString());
+		String emailId = (UUID.randomUUID()).toString();
+		
+		String timestamp = Long.toString(System.currentTimeMillis());
+		String minuteUntilEmailExpires = String.valueOf(minutesUntilResetPasswordEmailExpires);
+		
+		ResetPassword resetPassword = new ResetPassword(emailId, user, timestamp);
+		
+		resetPasswordService.createNewResetPassword(resetPassword);
+		
+		// email string is: username, email id, timestamp for email, minutes until email expires
+		emailServiceImp.sendSimpleMessage(
+				user.getEmail(), 
+				"Password Reset Dart Cart", 
+				"Hello "+user.getFirstName()+",\n"+ "Use the following link to reset your password:\n"
+				+ "http://localhost:3000/resetpassword?data="
+						+ cipheredUsername.toString()
+						+ "&data2="+emailId+ "&data3="
+						+String.valueOf(timestamp) + "&data4="
+						+minuteUntilEmailExpires
+				+"\nThe link will expire in 15 minutes.\nIf you did not request a passwrod reset, ignore this email.");
+
 		return ResponseEntity.ok("Reset Email Sent");
 	}
 		
 	@PatchMapping("/resetpassword")
 	public ResponseEntity<?> updatePassword(@RequestBody String request) {
+		
+		//gets emailid and password from request body
 		String[] userInfo = request.split(",");
-		String[] usernameArr = userInfo[0].split(":");
+		String[] emailIDArr = userInfo[0].split(":");
 		String[] passwordArr = userInfo[1].split(":");
 				
-		int firstIndex = usernameArr[1].indexOf("\"");
-		int secondIndex = usernameArr[1].lastIndexOf("\""); 
-		String username = usernameArr[1].substring(firstIndex+1, secondIndex);
+		int firstIndex = emailIDArr[1].indexOf("\"");
+		int secondIndex = emailIDArr[1].lastIndexOf("\""); 
+		String emailID = emailIDArr[1].substring(firstIndex+1, secondIndex);
 
 		firstIndex = passwordArr[1].indexOf("\"");
 		secondIndex = passwordArr[1].lastIndexOf("\""); 
 		String password = passwordArr[1].substring(firstIndex+1, secondIndex);
 		
-		com.revature.models.User existingUser = userService.getUserByUsername(username);
+		// get reset password object
+		Optional<ResetPassword> resetPasswordOpt = resetPasswordService.findResetPasswordById(emailID);
+		ResetPassword resetPassword = new ResetPassword();		
+		// check if reset password data was returned from database
+		if( resetPasswordOpt.isPresent() ) {
+			resetPassword = resetPasswordOpt.get();
+		}
+		else {
+			return ResponseEntity.notFound().build();
+		}		
+			
+		// get user object
+		com.revature.models.User existingUser = resetPassword.getUser();
 		
+		// if user does not exist
 		if(existingUser == null) {
 			return ResponseEntity.notFound().build();
 		}
 		
+		// if email is expired
+		long expireTime = Long.parseLong(resetPassword.getTimestamp()) 
+				          + minutesUntilResetPasswordEmailExpires*60000;
+		if(expireTime < System.currentTimeMillis()) {
+			return ResponseEntity.notFound().build();
+		}
+		
 		existingUser.setPassword(bCryptEncoder.encode(password));
-		userService.updateUser(existingUser); 	
+		resetPasswordService.deleteByID(emailID);
+		userService.updateUser(existingUser);
 		
 		return ResponseEntity.ok("Password updated");
 	}
