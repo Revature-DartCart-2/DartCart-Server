@@ -35,9 +35,8 @@ DartCart is an e-commerce web application designed to buy and sell products deve
 4) Run As Spring Boot Application
 ![Register](https://github.com/Revature-DartCart-2/DartCart-Server/blob/AndrewS/gendoc/image/readme/runAs.png?raw=true)
 
-## Usage
+Please reference the Maven file to see what services need to be installed.
 
-> Here, you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
 ## Contributors of first iteration (DartCart 1)
 
 * Abdul Samad Sadat
