@@ -30,7 +30,7 @@ public class UserRepoTest {
     "123-456-7890",
     "1 Test Street, Test Town, Testonia 12345",
     123563672L,
-    null
+    null, null
   );
 
   @ParameterizedTest
@@ -71,7 +71,7 @@ public class UserRepoTest {
       "757-411-1204",
       "1 Test Street, Test Town, Testonia 12345",
       1645743231935L,
-      null
+      null, null
     );
 
     userRepo.save(testUser);
