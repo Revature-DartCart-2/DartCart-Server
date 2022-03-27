@@ -35,5 +35,7 @@ public class WishList {
 		this.customer = customer;
 		this.product = product;
 	}
+	
+	
 
 }
