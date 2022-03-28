@@ -125,12 +125,12 @@ public class AuthController {
 				user.getEmail(), 
 				"Password Reset Dart Cart", 
 				"Hello "+user.getFirstName()+",\n"+ "Use the following link to reset your password:\n"
-				+ "http://localhost:3000/resetpassword?data="
+				+ "https://dart-cart-p3.azurewebsites.net/resetpassword?data="
 						+ cipheredUsername.toString()
-						+ "&data2="+emailId+ "&data3="
-						+String.valueOf(timestamp) + "&data4="
-						+minuteUntilEmailExpires
-				+"\nThe link will expire in 15 minutes.\nIf you did not request a passwrod reset, ignore this email.");
+						+ "&data2="+emailId
+						+ "&data3="+String.valueOf(timestamp)
+						+ "&data4="+minuteUntilEmailExpires
+				+"\nThe link will expire in 15 minutes.\nIf you did not request a password reset, ignore this email.");
 
 		return ResponseEntity.ok("Reset Email Sent");
 	}

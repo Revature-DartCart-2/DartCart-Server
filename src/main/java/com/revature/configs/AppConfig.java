@@ -28,6 +28,8 @@ public class AppConfig {
     ArrayList<String> allowedOrigins = new ArrayList<String>();
     allowedOrigins.add("http://localhost:3000");
     allowedOrigins.add("https://localhost:3000");
+    allowedOrigins.add("http://dart-cart-p3.azurewebsites.net/");
+    allowedOrigins.add("https://dart-cart-p3.azurewebsites.net/");
     config.setAllowedOrigins(allowedOrigins);
     ArrayList<String> exposedHeaders = new ArrayList<String>();
     exposedHeaders.add("Authorization");

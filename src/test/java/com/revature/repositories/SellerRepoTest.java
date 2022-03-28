@@ -36,7 +36,7 @@ public class SellerRepoTest {
     "123-456-7890",
     "1 Test Street, Test Town, Testonia 12345",
     123563672L,
-    null, null
+    null, null, null, null
   );
 
   private final Seller mockSeller = new Seller(
