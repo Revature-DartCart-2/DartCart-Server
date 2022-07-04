@@ -35,9 +35,21 @@ DartCart is an e-commerce web application designed to buy and sell products deve
 4) Run As Spring Boot Application
 ![Register](https://github.com/Revature-DartCart-2/DartCart-Server/blob/AndrewS/gendoc/image/readme/runAs.png?raw=true)
 
+<<<<<<< HEAD
 Please reference the Maven file to see what services need to be installed.
 
 ## Contributors of first iteration (DartCart 1)
+=======
+1. Type the following command into a command line utility inside the folder where you want the project to be stored:
+* `git clone https://github.com/Revature-DartCart/DartCart-Server.git`
+2. Open a back-end IDE, and import a Maven Project.
+3. Navigate to the folder where you cloned the repository, and select that folder.
+4. Confirm that the import is successful, and then start the application.
+
+Please reference the Maven file to see what services need to be installed.
+
+## Contributors
+>>>>>>> 88d2d12f8ae2ae275aae8db6b978335e353bd90c
 
 * Abdul Samad Sadat
 * Alejandro Gomez
