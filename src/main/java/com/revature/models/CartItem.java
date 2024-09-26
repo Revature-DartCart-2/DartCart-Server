@@ -27,7 +27,7 @@ public class CartItem {
   private boolean saved;
 
   @ManyToOne
-  @JoinColumn(name = "customer_id")
+//  @JoinColumn(name = "customer_id")
   private User customer;
 
   @OneToOne

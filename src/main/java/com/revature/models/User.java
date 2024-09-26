@@ -73,7 +73,7 @@ public class User {
   // Returns items in both cart and wishlist
   // Filter by CartItem's saved field to separate the lists
   @OneToMany
-  @JoinColumn(name = "cart_item_id")
+//  @JoinColumn(name = "cart_item_id")
   @JsonIgnore
   private List<CartItem> itemList;
 
