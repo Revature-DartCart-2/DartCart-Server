@@ -8,12 +8,13 @@ spring:
     name: dart-cart
 
   datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://project3server.database.windows.net:1433;databaseName=Project3
-    username: p3admin
-    password: Project3!
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/project-3
+    #    url: jdbc:sqlserver://project3server.database.windows.net:1433;databaseName=Project3
+    username: postgres
+    password: admin
   jpa:
-    database-platform: org.hibernate.dialect.SQLServerDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
       ddl-auto: update
